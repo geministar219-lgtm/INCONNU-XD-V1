@@ -1,19 +1,16 @@
+
 FROM node:lts-bookworm
 
 RUN apt-get update && \
-  apt-get install -y \
-  ffmpeg \
-  imagemagick \
-  webp && \
-  apt-get upgrade -y && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -y ffmpeg imagemagick webp && \
+    apt-get upgrade -y && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /root/inconnu
 
 COPY package.json .
-
-RUN npm install && npm install -g qrcode-terminal pm2
+RUN npm install
 
 COPY . .
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
